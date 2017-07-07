@@ -47,8 +47,7 @@ public class AccessTokenUtil {
 		String url = WxConstantData.accessTokenUrl + "&appid=" + appID + "&secret=" + appsecret;
 		AccessToken accessToken = getUtil.get(url, "请求access_token", AccessToken.class);
 		if (StringUtils.isNotEmpty(accessToken.getAccess_token())) {
-			logger.info(
-					"从微信服务器获取access_token:" + accessToken.getAccess_token() + ",过期时间:" + accessToken.getExpires_in());
+			logger.info("从微信服务器获取access_token:" + accessToken.getAccess_token() + ",过期时间:" + accessToken.getExpires_in());
 			saveAccessToken(accessToken.getAccess_token());
 		}
 	}
@@ -76,7 +75,7 @@ public class AccessTokenUtil {
 		if ("local".equals(storage)) {
 			result = token;
 		} else {
-			result = redisUtil.get("wx_access_token").toString();
+			result = (String) redisUtil.get("wx_access_token");
 		}
 		if (StringUtils.isEmpty(result)) {
 			this.requestAccessToken();

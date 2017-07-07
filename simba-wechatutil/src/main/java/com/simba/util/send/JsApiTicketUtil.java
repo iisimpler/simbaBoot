@@ -44,8 +44,7 @@ public class JsApiTicketUtil {
 	 * 请求jsapi_ticket
 	 */
 	public void requestTicket() {
-		String url = WxConstantData.getJsApiTicketUrl + "?access_token=" + accessTokenUtil.getAccessToken()
-				+ "&type=jsapi";
+		String url = WxConstantData.getJsApiTicketUrl + "?access_token=" + accessTokenUtil.getAccessToken() + "&type=jsapi";
 		JsApiTicket ticket = getUtil.get(url, "请求jsapi_ticket", JsApiTicket.class);
 		if (StringUtils.isNotEmpty(ticket.getTicket())) {
 			logger.info("从微信服务器获取jsapi_ticket:" + ticket.getTicket() + ",过期时间:" + ticket.getExpires_in());
@@ -76,7 +75,7 @@ public class JsApiTicketUtil {
 		if ("local".equals(storage)) {
 			result = ticket;
 		} else {
-			result = redisUtil.get("wx_jsapi_ticket").toString();
+			result = (String) redisUtil.get("wx_jsapi_ticket");
 		}
 		if (StringUtils.isEmpty(result)) {
 			this.requestTicket();
